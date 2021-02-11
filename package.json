@@ -3,5 +3,24 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1"
-  }
+  },
+  "name": "rest-server",
+  "description": "Descargar modulos de node\r ``` npm install ```",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satirolanister/bankend-node-class.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satirolanister/bankend-node-class/issues"
+  },
+  "homepage": "https://github.com/satirolanister/bankend-node-class#readme"
 }
