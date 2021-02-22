@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 
-const userDB = /* process.env.USERDB */  'root';
-const dB = /*process.env.USERDB */ 'restbook';
-const dBpass = /* process.env.PASSDB */ '1234*';
-const url = /* process.env.SERVDB || */ 'localhost'
+const userDB = process.env.USERDB;
+const dB = process.env.USERDB;
+const dBpass = process.env.PASSDB;
+const url = process.env.SERVDB;
 
 const sequelize = new Sequelize(dB, userDB, dBpass,{
     host: url,
