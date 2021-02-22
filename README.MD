@@ -108,9 +108,9 @@
             id: Integer id del usuario a eliminar
             userid: Integer id de la tabla users con role 1
         }
-  # prestamos
+ # prestamos
    peticiones (post, put)
-    ```http://localhost:3000/api/users ```
+  ```http://localhost:3000/api/users ```
 
     ##POST
             Esta petición no requiere parametros, pero el Body debe llevar algunos datos.
