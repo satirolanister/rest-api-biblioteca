@@ -1,102 +1,120 @@
-const userContr = {};
+const {
+    bookSeque,
+    usersSeque
+} = require('../infodb/accessDB');
+const service = require('../services/convertObject');
 
-const {usersSeque} = require('../infodb/accessDB');
+const libroContr = {};
 
 
-userContr.getAlluser = async (req, res) => {
+libroContr.getAllbooks = async (req, res) => {
+
     try {
-        const users = await usersSeque.findAll();
-        res.json(users);
+        const books = await bookSeque.findAll();
+        res.json(books);
     } catch (error) {
         res.json(error);
     }
+
+
+};
+libroContr.getOneBook = async (req, res) => {
+
+    const id = req.params.id
+    try {
+        const book = await bookSeque.findOne({
+            where: {
+                id_book: id
+            }
+        });
+        if (book === null || book === undefined || book === " ") {
+            res.status(404).json({
+                message: 'id del libro no encontrado'
+            })
+        } else {
+            res.status(200).json(book);
+        }
+
+    } catch (error) {
+        res.json(error);
+    }
+
+
 };
 
-userContr.getOneuser = async (req, res) => {
-    const id = req.params.id;
+libroContr.insertBook = async (req, res) => {
+    // body
+    const {
+        id_book,
+        titulo,
+        autor,
+        year,
+        editorial,
+        genero,
+        userid
+    } = req.body;
+    const data = {
+        id_book: id_book,
+        titulo: titulo,
+        autor: autor,
+        year: year,
+        editorial: editorial,
+        genero: genero,
+        estado: "Disponible"
+    };
+    const id = userid;
     try {
-        if(req.params.id === null || req.params.id === ''){
-            res.json({
-                Message: `Id de usuario proporcionado no puede ser vacio`
-            })
-        }else{
+        if (data.id_book === undefined || data.id_book === ' ' || data.titulo === undefined || data.titulo === ' ' ||
+            data.autor === undefined || data.autor === ' ' || data.year === undefined || data.year === ' ' ||
+            data.editorial === undefined || data.editorial === ' ' || data.genero === undefined || data.genero === ' ' ||
+            id === undefined || id === ' ') {
+            res.status(400).json(`Se requiere todos los campos debe ser llenados`);
+        } else {
             const user = await usersSeque.findOne({
-                where:{
+                where: {
                     _cel: id
                 }
             });
-            if(user === undefined || user === null || user === " "){
-                res.status(404).json({message: `El usuario no existe`});
-            }else{
-                res.json({Message:`Información usuario`,user});
-            }
-        }
-        
-        
-    } catch (error) {
-        res.status(500).json(error)
-    }
-}
-
-userContr.insertUser = async (req, res) => {
-    const {_cel, nombre, apellido, f_nacimiento, dirección, telefono, role, userid} = req.body;
-    const data ={
-        _cel,
-        nombre,
-        apellido,
-        f_nacimiento,
-        dirección,
-        telefono,
-        role
-    }
-    const Userid = userid;
-
-    if(req.body === undefined || req.body === { } || req.body === ' '){
-        res.status(400).json({
-            Message: `El body no debe estar vacio`
-        })
-    }else{
-        if(_cel === undefined || _cel === " " || nombre === undefined || nombre === " " || 
-           f_nacimiento === undefined || f_nacimiento === " " || apellido === undefined || apellido === "" ||
-           dirección === undefined || dirección === " " || telefono === undefined || telefono === "" || role === undefined || role === " "){
-             res.json({
-                 Message: `Todos los campos deben ser llenados`
-             });  
-        }else{
-            const user = await usersSeque.findOne({
-                where:{
-                    _cel: Userid
-                }
-            });
-            if(user.Role =! 1){
+            if (user.Role = !1) {
                 res.status(403).json({
                     Message: "Usuario no autorizado para dicha acción"
                 });
-            }else{
-                const iduser = await usersSeque.findOne({
-                    where:{
-                        _cel: _cel
+            } else {
+
+                const bookid = await bookSeque.findOne({
+                    where: {
+                        id_book: id_book
                     }
                 });
-                if(iduser === null){
 
-                    const user = await usersSeque.create(data);
+                if (bookid === null) {
+
+                    
+                    const book = await bookSeque.create(data);
+
                     res.status(200)
                        .json({
-                        Message: "Usuaio creado",
-                        user
+                        Message: "libro creado",
+                        libro: book
                     });
-                }else{
-                    res.status(400).json({
-                        Message: `El Usuario con id ${_cel} ya se encuentra en existencia`
+
+                } else {
+                    res.json({
+                        Message: `el libro con id ${id_book} ya se encuentra en existencia`
                     });
-                }
-            }
+
+                };
+            };
+
         }
+
+    } catch (error) {
+        res.json(error)
     }
+
 };
 
-userContr.updateUser = async (req, res) => {
+libroContr.updateBook = async (req, res) => {
 
     let id;
     let userid;
@@ -121,15 +139,14 @@ userContr.updateUser = async (req, res) => {
     }
 
     try {
-        
-        let valid = await usersSeque.findOne({
+        let valid = await bookSeque.findOne({
             where: {
-                _cel: userid
+                id_book: id
             }
         })
         if (valid === null) {
             res.status(404)
-                .json(`Usuario con id ${id} no encontrado`)
+                .json(`Libro con id ${id} no encontrado`)
         } else {
             const user = await usersSeque.findOne({
                 where: {
@@ -143,9 +160,9 @@ userContr.updateUser = async (req, res) => {
                 });
             } else {
 
-                await usersSeque.update(data, {
+                await bookSeque.update(data, {
                     where: {
-                        _cel: id
+                        id_book: id
                     }
                 });
                 res.status(200).json({
@@ -163,10 +180,11 @@ userContr.updateUser = async (req, res) => {
     }
 };
 
-userContr.deleteUser = async (req, res) => {
+libroContr.deleteBook = async (req, res) => {
+
     let id;
     let userid;
-    
+
 
     
         if(req.query.id === undefined || req.query.userid === undefined || req.query.userid  === {}
@@ -178,7 +196,9 @@ userContr.deleteUser = async (req, res) => {
             id = req.query.id;
             userid = req.query.userid;
             data = req.body;
+
         }
+    
 
 
     try {
@@ -194,9 +214,9 @@ userContr.deleteUser = async (req, res) => {
             });
         } else {
 
-            await usersSeque.destroy({
+            await bookSeque.destroy({
                 where: {
-                    _cel: id
+                    id_book: id
                 }
             });
             res.json({
@@ -214,5 +234,4 @@ userContr.deleteUser = async (req, res) => {
 
 
 
-
-module.exports = userContr;
+module.exports = libroContr;

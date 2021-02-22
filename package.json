@@ -2,13 +2,14 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.0"
   },
   "name": "rest-server",
   "description": "Descargar modulos de node\r ``` npm install ```",
   "version": "1.0.0",
   "main": "app.js",
-  "devDependencies": {},
   "scripts": {
     "start": "node app"
   },

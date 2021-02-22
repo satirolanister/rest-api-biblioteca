@@ -6,15 +6,17 @@ const userControl = require('../controllers/userContr');
 
 const router = Router();
 
-router.get('/',userControl.get);
+router.get('/',userControl.getAlluser);
 
-router.put('/:id',userControl.put);
+router.get('/:id',userControl.getOneuser);
 
-router.post('/',userControl.post);
+router.post('/',userControl.insertUser);
 
-router.delete('/',userControl.delete);
+router.put('/', userControl.updateUser);
 
-router.patch('/',userControl.patch);
+router.delete('/', userControl.deleteUser);
+
+
 
 
 module.exports = router;
