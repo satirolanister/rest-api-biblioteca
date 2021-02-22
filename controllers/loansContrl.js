@@ -80,7 +80,7 @@ loanContr.add = async(req, res) => {
 }; 
 
 loanContr.updateLoan = async(req, res) =>{
-    const {id, userloan, loanuser, bookloan} = req.body
+    const {id, userloan} = req.body
 
     if(req.body === null || req.body === ' ' || req.body === { }){
         res.status(400).json('El body no puede quedar vacio')
@@ -95,42 +95,34 @@ loanContr.updateLoan = async(req, res) =>{
                 Message: `El user ${userLoan} no esta autorizado para hacer esta acción`
             });
         }else{
-            let user = await usersSeque.findOne({
+            const book = await loansSeque.findOne({
                 where: {
-                    _cel:loanuser
+                    id : id
                 }
-            });
-            if(user === null){
-                res.status(404).json({
-                    Message: `El usuario ${loanuser} no se encuentra creado`
+            })
+            const idbook = book.bookloan
+            if(idbook === null){
+                res.status(400).json({
+                    Message: `El libro con id ${idbook} no se encuentra en inventario`
                 });
             }else{
-                let book = await bookSeque.findOne({
-                    where:{
-                        id_book: bookloan
-                    }
-                });
-                if(book === null){
-                    res.status(404).json({
-                        Message: `El libro ${bookloan} no se encuentra en inventario`
-                    });
-                }else{
-                    await bookSeque.update({estado: 'disponible'}, {
-                        where: {
-                            id_book: bookloan
-                            }
-                    });
-                    await loansSeque.update({updatedAt:book.updatedAt},{
-                        where:{
-                            id: id
+                await bookSeque.update({estado: 'disponible'}, {
+                    where: {
+                        id_book: idbook
                         }
-                    })
-                    res.status(200).json({
-                        Message: `Entrega realizada`,
-                        book: book.id_book,
-                    })
-                } 
+                });
+                await loansSeque.update({updatedAt:book.updatedAt},{
+                    where:{
+                        id: id
+                    }
+                })
+                res.status(200).json({
+                    Message: `Entrega realizada`,
+                    book: idbook,
+                    fecha_entrega: book.updatedAt
+                }) 
             }
+            
         }
     }
 }
