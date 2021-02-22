@@ -120,7 +120,7 @@ loanContr.updateLoan = async(req, res) =>{
                     Message: `Entrega realizada`,
                     book: idbook,
                     fecha_entrega: book.updatedAt
-                }) 
+                }); 
             }
             
         }

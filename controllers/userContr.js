@@ -68,6 +68,11 @@ userContr.insertUser = async (req, res) => {
                     _cel: Userid
                 }
             });
+            if(user === null){
+                res.status(404).json({
+                    Message: `El id del usuario ${id} no existe`
+                });
+            }
             if(user.Role =! 1){
                 res.status(403).json({
                     Message: "Usuario no autorizado para dicha acción"
@@ -136,6 +141,11 @@ userContr.updateUser = async (req, res) => {
                     _cel: userid
                 }
             })
+            if(user === null){
+                res.status(404).json({
+                    Message: `El id del usuario ${id} no existe`
+                });
+            }
             if (user.Role = !1) {
                 res.status(403)
                    .json({
@@ -187,7 +197,12 @@ userContr.deleteUser = async (req, res) => {
             where: {
                 _cel: userid
             }
-        })
+        });
+        if(user === null){
+            res.status(404).json({
+                Message: `El id del usuario ${id} no existe`
+            });
+        }
         if (user.Role = !1) {
             res.status(403).json({
                 Message: "Usuario no autorizado para dicha acción"

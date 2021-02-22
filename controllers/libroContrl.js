@@ -75,6 +75,11 @@ libroContr.insertBook = async (req, res) => {
                     _cel: id
                 }
             });
+            if(user === null){
+                res.status(404).json({
+                    Message: `El id del usuario ${id} no existe`
+                });
+            }
             if (user.Role = !1) {
                 res.status(403).json({
                     Message: "Usuario no autorizado para dicha acción"
@@ -153,6 +158,11 @@ libroContr.updateBook = async (req, res) => {
                     _cel: userid
                 }
             })
+            if(user === null){
+                res.status(404).json({
+                    Message: `El id del usuario ${id} no existe`
+                });
+            }
             if (user.Role = !1) {
                 res.status(403)
                    .json({
@@ -208,6 +218,11 @@ libroContr.deleteBook = async (req, res) => {
                 _cel: userid
             }
         })
+        if(user === null){
+            res.status(404).json({
+                Message: `El id del usuario ${id} no existe`
+            });
+        }
         if (user.Role = !1) {
             res.status(403).json({
                 Message: "Usuario no autorizado para dicha acción"

@@ -110,7 +110,7 @@
         }
  # prestamos
    peticiones (post, put)
-  ```http://localhost:3000/api/users ```
+  ```http://localhost:3000/api/lo ```
 
     ##POST
             Esta petición no requiere parametros, pero el Body debe llevar algunos datos.
