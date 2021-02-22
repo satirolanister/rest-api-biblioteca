@@ -15,9 +15,11 @@
 
     ## GET
         No recibe parametros, ni solicita datos del Body
+        http://localhost:3000/api/libros
 
     ## GET con id   
-        Solo recibe un parametro id del libro a consultar    
+        Solo recibe un parametro id del libro a consultar
+        http://localhost:3000/api/libros/id(Integer)
 
     ## POST
         En un objeto JSON se recibe los siguientes datos en el Body y va sin parametros adicionales   
@@ -109,8 +111,8 @@
             userid: Integer id de la tabla users con role 1
         }
  # prestamos
-   peticiones (post, put)
-  ```http://localhost:3000/api/users ```
+    peticiones (post, put)
+   ```http://localhost:3000/api/loans/ ```
 
     ##POST
             Esta petición no requiere parametros, pero el Body debe llevar algunos datos.
