@@ -8,6 +8,7 @@
 ``` npm run start ```
 
 # Rutas
+
   # Libros
     peticiones (get, post, put, delete)
    ```http://localhost:3000/api/libros ```
@@ -56,15 +57,18 @@
             userid: Integer _cel de la tabla users con role 1
         }  
 
-# Usuarios 
-  peticiones (get, post, put, delete)
-    ```http://localhost:3000/api/users ```
+  # Usuarios 
+    peticiones (get, post, put, delete)
+   ```http://localhost:3000/api/users ```
 
     ## GET
         No recibe parametros, ni solicita datos del Body
+        http://localhost:3000/api/users 
 
     ## GET con id   
         Solo recibe un parametro id del usuario a consultar
+        http://localhost:3000/api/users/id(Integer) 
+
     ## POST
         En un objeto JSON se recibe los siguientes datos en el Body y va sin parametros adicionales   
         {
@@ -104,23 +108,24 @@
             id: Integer id del usuario a eliminar
             userid: Integer id de la tabla users con role 1
         }
-# prestamos
-peticiones (post, put)
- ```http://localhost:3000/api/users ```
+  # prestamos
+   peticiones (post, put)
+    ```http://localhost:3000/api/users ```
 
     ##POST
-        Esta petición no requiere parametros, pero el Body debe llevar algunos datos.
+            Esta petición no requiere parametros, pero el Body debe llevar algunos datos.
 
-        Body:
-        {
-            "userloan" : id usuario con role 1 en la tabla users,
-            "loanuser" : id usuario que solicita el prestamo,
-            "bookloan" : id libro que se va a prestar   
-        }
+            Body:
+            {
+                "userloan" : id usuario con role 1 en la tabla users,
+                "loanuser" : id usuario que solicita el prestamo,
+                "bookloan" : id libro que se va a prestar   
+            }
     ##PUT
-        Esta petición no requiere parametros, pero el Body debe llevar algunos datos.
-        Body:
-        {
-            "id": id del prestamo realizado,     
-            "userloan" : id usuario con role 1 en la tabla users
-        }             
+            Esta petición no requiere parametros, pero el Body debe llevar algunos datos.
+            
+            Body:
+            {
+                "id": id del prestamo realizado,     
+                "userloan" : id usuario con role 1 en la tabla users
+            }             
